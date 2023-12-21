@@ -1,0 +1,239 @@
+CREATE PROCEDURE insert_ingredient
+
+Elle doit mettre a jour la table a chaque fois qui'il y'a une insertion (collone )
+-
+
+
+
+INSERT INTO Recette (id_recette, categorie, Titre, Nb_personnes, Preparation, Cuisson, Repos, ingredient)
+VALUES
+(6, 'entree', 'Salade', 4, 10, 0, '0', 'tomates, oignons, vinaigrette'),
+(7, 'entree', 'Soupe', 6, 20, 30, '10', 'oignons, bouillon de poulet, pain grillé'),
+(8, 'entree', 'Brusche', 4, 15, 10, '0', 'tomates, basilic, pain grillé'),
+(9, 'resis', 'Poulet', 4, 15, 60, '10', 'poulet, pommes de terre, carottes'),
+(10, 'resis', 'bologn', 6, 20, 30, '0', 'spaghetti, viande hachée, sauce tomate'),
+(11, 'resis', 'Ragoût', 8, 30, 120, '30', 'boeuf, pommes de terre, carottes'),
+(12, 'desert', 'Tarte', 8, 30, 45, '0', 'pommes, sucre, cannelle'),
+(13, 'desert', 'Crème', 4, 20, 30, '120', 'crème, sucre, vanille'),
+(14, 'desert', 'chocola', 6, 15, 0, '120', 'chocolat, oeufs, sucre'),
+(1, 'desert', 'Tiramis', 8, 30, 0, '120', 'biscuits, mascarpone, café');
+
+
+
+INSERT INTO Materiel_cuisne (ID_mat1, Nom_materiel)
+VALUES
+(1, 'Couteau de chef'),
+(2, 'Couteau à pain'),
+(3, 'Couteau office'),
+(4, 'Couteau à désosser'),
+(5, 'Couteau à filet'),
+(6, 'Couteau à légumes'),
+(7, 'Couteau à trancher'),
+(8, 'Ciseaux de cuisine'),
+(9, 'Planche à découper'),
+(10, 'Mandoline'),
+(11, 'Râpe'),
+(12, 'Presse-ail'),
+(13, 'Presse-agrumes'),
+(14, 'Essoreuse à salade'),
+(15, 'Passoire'),
+(16, 'Tamis'),
+(17, 'Fouet'),
+(18, 'Batteur électrique'),
+(19, 'Robot culinaire'),
+(20, 'Mixeur plongeant'),
+(21, 'Blender'),
+(22, 'Hachoir'),
+(23, 'Moulin à café'),
+(24, 'Moulin à poivre'),
+(25, 'Moulin à sel'),
+(26, 'Balance de cuisine'),
+(27, 'Thermomètre de cuisine'),
+(28, 'Minuteur'),
+(29, 'Plat à four'),
+(30, 'Poêle'),
+(31, 'Casserole'),
+(32, 'Sauteuse'),
+(33, 'Wok'),
+(34, 'Grill'),
+(35, 'Plancha'),
+(36, 'Faitout'),
+(37, 'Marmite'),
+(38, 'Cocotte'),
+(39, 'Autocuiseur'),
+(40, 'Cuiseur vapeur'),
+(41, 'Four'),
+(42, 'Micro-ondes'),
+(43, 'Plaque de cuisson'),
+(44, 'Hotte aspirante'),
+(45, 'Lave-vaisselle'),
+(46, 'Réfrigérateur'),
+(47, 'Congélateur'),
+(48, 'Machine à glaçons'),
+(49, 'Machine à café'),
+(50, 'Bouilloire');
+
+
+
+
+INSERT INTO Materiel_restauration (ID_mat2, Nom_materiel_restauration)
+VALUES
+(1, 'Assiettes'),
+(2, 'Couverts'),
+(3, 'Verres'),
+(4, 'Tasses'),
+(5, 'Bols'),
+(6, 'Plateaux'),
+(7, 'Pichets'),
+(8, 'Carafe'),
+(9, 'Saladiers'),
+(10, 'Plats'),
+(11, 'Couvercles'),
+(12, 'Couteaux de cuisine'),
+(13, 'Planche à découper'),
+(14, 'Ciseaux de cuisine'),
+(15, 'Passoire'),
+(16, 'Tamis'),
+(17, 'Fouet'),
+(18, 'Batteur électrique'),
+(19, 'Robot culinaire'),
+(20, 'Mixeur plongeant'),
+(21, 'Blender'),
+(22, 'Hachoir'),
+(23, 'Moulin à café'),
+(24, 'Moulin à poivre'),
+(25, 'Moulin à sel'),
+(26, 'Balance de cuisine'),
+(27, 'Thermomètre de cuisine'),
+(28, 'Minuteur'),
+(29, 'Plat à four'),
+(30, 'Poêle'),
+(31, 'Casserole'),
+(32, 'Sauteuse'),
+(33, 'Wok'),
+(34, 'Grill'),
+(35, 'Plancha'),
+(36, 'Faitout'),
+(37, 'Marmite'),
+(38, 'Cocotte'),
+(39, 'Autocuiseur'),
+(40, 'Cuiseur vapeur'),
+(41, 'Four'),
+(42, 'Micro-ondes'),
+(43, 'Plaque de cuisson'),
+(44, 'Hotte aspirante'),
+(45, 'Lave-vaisselle'),
+(46, 'Réfrigérateur'),
+(47, 'Congélateur'),
+(48, 'Machine à glaçons'),
+(49, 'Machine à café'),
+(50, 'Bouilloire');
+
+
+
+
+CREATE PROCEDURE InsertClient
+    @Nom VARCHAR(50),
+    @Prenom VARCHAR(50)
+AS
+BEGIN
+    INSERT INTO Client (Nom, Prenom)
+    VALUES (@Nom, @Prenom)
+END;
+
+
+
+CREATE PROCEDURE InsertCommande
+    @ID_commande INT,
+    @id_recette INT,
+    @nom_recette VARCHAR(12),
+    @Prix_recette INT
+AS
+BEGIN
+    INSERT INTO Commande (ID_commande, id_recette, nom_recette, Prix_recette)
+    VALUES (@ID_commande, @id_recette, @nom_recette, @Prix_recette)
+END;
+
+
+CREATE PROCEDURE InsertReservation
+    @ID_Reservation INT,
+    @Nom_reservation VARCHAR(50),
+    @Prenom_Reservation VARCHAR(50),
+    @Jour_reservation VARCHAR(50),
+    @Heure_reservation DECIMAL(15,2),
+    @Numero_table INT
+AS
+BEGIN
+    INSERT INTO Reservation (ID_Reservation, Nom_reservation, Prenom_Reservation, Jour_reservation, Heure_reservation, Numero_table)
+    VALUES (@ID_Reservation, @Nom_reservation, @Prenom_Reservation, @Jour_reservation, @Heure_reservation, @Numero_table)
+END;
+
+
+
+CREATE PROCEDURE GetNomReservation
+AS
+BEGIN
+    SELECT Nom_reservation FROM Reservation
+END;
+
+
+
+
+CREATE PROCEDURE Nom_Etat_Commande
+    @ID_Etat_Commande INT
+AS
+BEGIN
+    SELECT Nom_etat
+    FROM Etat_Commande
+    WHERE ID_etat = @ID_Etat_Commande
+END
+
+
+
+
+CREATE PROCEDURE Insert_Etat_Commande
+    @ID_Etat INT,
+    @Nom_Etat TEXT
+AS
+BEGIN
+    INSERT INTO Etat_Commande (ID_etat, Nom_etat)
+    VALUES (@ID_Etat, @Nom_Etat)
+END
+
+
+
+
+INSERT INTO [Table] (ID_table)
+VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12), (13), (14), (15), (16), (17), (18), (19), (20), (21), (22), (23), (24), (25), (26), (27), (28), (29), (30)
+
+
+
+
+CREATE PROCEDURE Recuperer_ID_Table_Reservation
+AS
+BEGIN
+    SELECT t.ID_table, r.ID_Reservation
+    FROM [Table] t
+    JOIN Reservation r ON t.ID_table = r.ID_table
+END
+
+
+
+
+
+
+CREATE PROCEDURE Recuperer_ID_Commande
+AS
+BEGIN
+    SELECT ID_commande
+    FROM Commande
+END
+
+
+
+
+
+
+
+
+

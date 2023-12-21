@@ -1,0 +1,178 @@
+CREATE TABLE Etat_Commande(
+   ID_etat AUTO_INCREMENT,
+   Nom_etat TEXT,
+   PRIMARY KEY(ID_etat)
+);
+
+CREATE TABLE Recette(
+   id_recette AUTO_INCREMENT,
+   Categorie VARCHAR(7),
+   Titre VARCHAR(50),
+   Nb_personnes INT,
+   Preparation INT,
+   Cuisson INT,
+   Repos VARCHAR(50),
+   ingredient VARCHAR(50),
+   PRIMARY KEY(id_recette)
+);
+
+CREATE TABLE TabIe(
+   ID_table VARCHAR(50),
+   Nombre_place INT,
+   PRIMARY KEY(ID_table)
+);
+
+CREATE TABLE Ingredient_en_stock(
+   ID_ingrStock AUTO_INCREMENT,
+   categorie TEXT,
+   Nom VARCHAR(10),
+   Quantite_en_stock INT,
+   id_recette AUTO_INCREMENT NOT NULL,
+   PRIMARY KEY(ID_ingrStock),
+   FOREIGN KEY(id_recette) REFERENCES Recette(id_recette)
+);
+
+CREATE TABLE Materiel_cuisne(
+   ID_mat1 AUTO_INCREMENT,
+   Nom_materiel VARCHAR(50),
+   PRIMARY KEY(ID_mat1)
+);
+
+CREATE TABLE Materiel_restauration(
+   ID_mat2 VARCHAR(50),
+   Nom_materiel VARCHAR(20),
+   PRIMARY KEY(ID_mat2)
+);
+
+CREATE TABLE Matériel_commun(
+   ID_mat3 VARCHAR(50),
+   PRIMARY KEY(ID_mat3)
+);
+
+CREATE TABLE Restauration(
+   ID_rest INT,
+   PRIMARY KEY(ID_rest)
+);
+
+CREATE TABLE serveurs_(
+   ID_serveur INT,
+   PRIMARY KEY(ID_serveur)
+);
+
+CREATE TABLE cuisine(
+   ID INT,
+   PRIMARY KEY(ID)
+);
+
+CREATE TABLE Reservation(
+   ID_Reservation INT,
+   Nom_reservation VARCHAR(50),
+   Prenom_Reservation VARCHAR(50),
+   Jour_reservation VARCHAR(50),
+   Heure_reservation DECIMAL(15,2),
+   Numero_table INT,
+   PRIMARY KEY(ID_Reservation)
+);
+
+CREATE TABLE Commande(
+   ID AUTO_INCREMENT,
+   id_recette INT,
+   Nom_recette VARCHAR(12),
+   Prix_recette INT,
+   ID_etat AUTO_INCREMENT NOT NULL,
+   PRIMARY KEY(ID),
+   FOREIGN KEY(ID_etat) REFERENCES Etat_Commande(ID_etat)
+);
+
+CREATE TABLE Client(
+   ID_client AUTO_INCREMENT,
+   Nom VARCHAR(6),
+   Prénom_ VARCHAR(10),
+   ID_table VARCHAR(50) NOT NULL,
+   ID_etat AUTO_INCREMENT NOT NULL,
+   PRIMARY KEY(ID_client),
+   FOREIGN KEY(ID_table) REFERENCES TabIe(ID_table),
+   FOREIGN KEY(ID_etat) REFERENCES Etat_Commande(ID_etat)
+);
+
+CREATE TABLE Passer(
+   ID_serveur INT,
+   ID_client_1 AUTO_INCREMENT,
+   ID INT,
+   ID_CLIENT VARCHAR(50),
+   PRIMARY KEY(ID_serveur, ID_client_1),
+   FOREIGN KEY(ID_serveur) REFERENCES serveurs_(ID_serveur),
+   FOREIGN KEY(ID_client_1) REFERENCES Client(ID_client)
+);
+
+CREATE TABLE Concerner(
+   ID_1 INT,
+   id_recette_1 AUTO_INCREMENT,
+   ID INT,
+   id_recette INT NOT NULL,
+   PRIMARY KEY(ID_1, id_recette_1),
+   FOREIGN KEY(ID_1) REFERENCES cuisine(ID),
+   FOREIGN KEY(id_recette_1) REFERENCES Recette(id_recette)
+);
+
+CREATE TABLE Utiliser_(
+   id_recette AUTO_INCREMENT,
+   ID_mat2 VARCHAR(50),
+   ID_mat3 VARCHAR(50),
+   ID_mat1 AUTO_INCREMENT,
+   Id_recette_ INT,
+   ID_mat VARCHAR(50),
+   PRIMARY KEY(id_recette, ID_mat2, ID_mat3, ID_mat1),
+   FOREIGN KEY(id_recette) REFERENCES Recette(id_recette),
+   FOREIGN KEY(ID_mat2) REFERENCES Materiel_restauration(ID_mat2),
+   FOREIGN KEY(ID_mat3) REFERENCES Matériel_commun(ID_mat3),
+   FOREIGN KEY(ID_mat1) REFERENCES Materiel_cuisne(ID_mat1)
+);
+
+CREATE TABLE Comporter(
+   ID_mat1_1 AUTO_INCREMENT,
+   ID INT,
+   ID_mat INT,
+   ID_mat3 INT,
+   ID_mat2 VARCHAR(50),
+   ID_mat1 INT NOT NULL,
+   PRIMARY KEY(ID_mat1_1, ID),
+   FOREIGN KEY(ID_mat1_1) REFERENCES Materiel_cuisne(ID_mat1),
+   FOREIGN KEY(ID) REFERENCES cuisine(ID)
+);
+
+CREATE TABLE obtenir(
+   ID_table VARCHAR(50),
+   ID_Reservation INT,
+   ID_placement VARCHAR(50),
+   PRIMARY KEY(ID_table, ID_Reservation),
+   FOREIGN KEY(ID_table) REFERENCES TabIe(ID_table),
+   FOREIGN KEY(ID_Reservation) REFERENCES Reservation(ID_Reservation)
+);
+
+CREATE TABLE depose(
+   ID AUTO_INCREMENT,
+   ID_serveur INT,
+   ID_commande INT,
+   PRIMARY KEY(ID, ID_serveur),
+   FOREIGN KEY(ID) REFERENCES Commande(ID),
+   FOREIGN KEY(ID_serveur) REFERENCES serveurs_(ID_serveur)
+);
+
+CREATE TABLE prendre(
+   ID AUTO_INCREMENT,
+   ID_1 INT,
+   ID_commande INT,
+   PRIMARY KEY(ID, ID_1),
+   FOREIGN KEY(ID) REFERENCES Commande(ID),
+   FOREIGN KEY(ID_1) REFERENCES cuisine(ID)
+);
+
+CREATE TABLE dispose(
+   ID_client AUTO_INCREMENT,
+   ID_Reservation_1 INT,
+   ID_reservation INT,
+   PRIMARY KEY(ID_client, ID_Reservation_1),
+   FOREIGN KEY(ID_client) REFERENCES Client(ID_client),
+   FOREIGN KEY(ID_Reservation_1) REFERENCES Reservation(ID_Reservation)
+);
